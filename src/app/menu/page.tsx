@@ -9,13 +9,13 @@ export default function Menu() {
   type Category = "souvlakia" | "piates" | "merides" | "salates" | "anapsyktika" | "pies" | "drinks";
 
   const categories: { key: Category; label: string }[] = [
-    { key: "souvlakia", label: "Souvlakia" },
-    { key: "piates", label: "Piates" },
-    { key: "merides", label: "Merides" },
-    { key: "salates", label: "Salates" },
-    { key: "anapsyktika", label: "Anapsyktika" },
-    { key: "pies", label: "Pies" },
-    { key: "drinks", label: "Drinks" },
+    { key: "souvlakia", label: "Σουβλάκια" },
+    { key: "piates", label: "Πιάτα" },
+    { key: "merides", label: "Μερίδες" },
+    { key: "salates", label: "Σαλάτες" },
+    { key: "anapsyktika", label: "Αναψυκτικά" },
+    { key: "pies", label: "Πίτες" },
+    { key: "drinks", label: "Ποτά" },
   ];
 
   const [activeCategory, setActiveCategory] = useState<Category>("souvlakia");
@@ -93,17 +93,17 @@ export default function Menu() {
 
       {/* Menu Categories */}
       <section
-        className={`sticky top-[55px] z-30 py-4 border-b transition-all duration-300 ${
-            isScrolled ? "bg-gray-50 shadow-md" : "bg-white"
-        }`}
-        >
+        className={`sticky z-30 py-4 border-b transition-all duration-300 ${
+          isScrolled ? "bg-gray-50 shadow-md" : "bg-white"
+        } top-[45px] md:top-[55px]`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-             {categories.map((cat) => (
+          <div className="flex gap-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:justify-center">
+            {categories.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setActiveCategory(cat.key)}
-                className={`px-6 py-3 font-bold transition-all ${
+                className={`inline-block px-6 py-3 font-bold transition-all flex-shrink-0 ${
                   activeCategory === cat.key
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"

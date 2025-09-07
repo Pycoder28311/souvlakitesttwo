@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../navigator';
 import Footer from '../footer';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('history');
@@ -83,7 +85,13 @@ export default function About() {
               </div>
               
               <div className="bg-gray-200 h-96 flex items-center justify-center">
-                <span className="text-gray-600">Ιστορική Φωτογραφία</span>
+                <div className="relative h-full w-full">
+                <Image 
+                  src="/oldphoto.jpg" 
+                  alt="Ιστορική Φωτογραφία" 
+                  fill
+                  className="object-cover rounded" />
+                </div>
               </div>
             </div>
           )}
@@ -221,12 +229,12 @@ export default function About() {
             Απολαύστε τα αυθεντικά ελληνικά σουβλάκια που φτιάχνονται με την ίδια αγάπη και πάθος εδώ και 40 χρόνια
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-3 font-bold text-lg transition-colors">
+            <Link href="/menu" className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-3 font-bold text-lg transition-colors">
               Δείτε το Μενού
-            </button>
-            <button className="bg-transparent hover:bg-white border-2 border-white text-white hover:text-gray-900 px-8 py-3 font-bold text-lg transition-colors">
+            </Link>
+            <Link href="/contact" className="bg-transparent hover:bg-white border-2 border-white text-white hover:text-gray-900 px-8 py-3 font-bold text-lg transition-colors">
               Κάντε Κράτηση
-            </button>
+            </Link>
           </div>
         </div>
       </section>

@@ -1,9 +1,9 @@
-// Footer.js
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-800 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Grid: single column on mobile, 4 columns on md+ */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
           <div>
             <h3 className="text-xl font-bold mb-4">ΣΟΥΒΛΑΚΙΑ</h3>
             <p className="text-gray-400">Αυθεντικά ελληνικά σουβλάκια από το 1995.</p>
@@ -39,7 +39,7 @@ export default function Footer() {
 
           <div>
             <h4 className="font-bold mb-4">Ακολουθήστε μας</h4>
-            <div className="flex space-x-4">
+            <div className="flex justify-center md:justify-start space-x-4">
               <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 Facebook
               </a>

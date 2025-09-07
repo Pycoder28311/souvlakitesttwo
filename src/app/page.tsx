@@ -6,6 +6,8 @@ import Navbar from './navigator';
 import Footer from './footer';
 import Link from "next/link";
 import homepage from "../../public/homepage.jpg";
+import { useEffect, useRef, useState } from "react";
+import RedSquareCarousel from './carousel';
 
 export default function Home() {
 
@@ -24,8 +26,86 @@ export default function Home() {
     },
   ];
 
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [visible, setVisible] = useState<boolean[]>([false, false, false]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = Number(entry.target.getAttribute("data-index"));
+          if (entry.isIntersecting) {
+            setVisible((prev) => {
+              const updated = [...prev];
+              updated[index] = true;
+              return updated;
+            });
+          }
+        });
+      },
+      { threshold: 0.2 } // trigger when 20% visible
+    );
+
+    cardsRef.current.forEach((card) => card && observer.observe(card));
+
+    return () => {
+      cardsRef.current.forEach((card) => card && observer.unobserve(card));
+    };
+  }, []);
+
+  const cards = [
+    {
+      title: "Τοποθεσία",
+      icon: "📍",
+      description: "Οδός Παραδείσου 123, Αθήνα",
+    },
+    {
+      title: "Ωράριο",
+      icon: "⏰",
+      description: "Δευ-Παρ: 12:00 - 24:00\nΣαβ-Κυρ: 12:00 - 02:00",
+    },
+    {
+      title: "Τηλέφωνο",
+      icon: "📞",
+      description: "210 123 4567\n694 123 4567",
+    },
+  ];
+
+  type MenuItem = {
+    name: string;
+    description: string;
+    price: string;
+    imageSrc: string; // path to the image
+    imageAlt: string;
+  };
+
+  const menuItems: MenuItem[] = [
+    {
+      name: "Σουβλάκι Χοιρινό",
+      description: "Χοιρινό με άρωμα θυμάρι και λεμόνι, σε παραδοσιακό πίτα",
+      price: "€2.80",
+      imageSrc: "/hirino.jpg",
+      imageAlt: "Σουβλάκι Χοιρινό",
+    },
+    {
+      name: "Γύρος Κοτόπουλο",
+      description: "Γύρος κοτόπουλου με γιαούρτι και φρέσκια λαχανικά",
+      price: "€3.20",
+      imageSrc: "/gyros.jpg",
+      imageAlt: "Γύρος Κοτόπουλο",
+    },
+    {
+      name: "Πίτα Γύρος Μικτή",
+      description: "Μικτή πίτα με χοιρινό και κοτόπουλο, τζατζίκι και πατάτες",
+      price: "€4.50",
+      imageSrc: "/pita.png",
+      imageAlt: "Πίτα Γύρος Μικτή",
+    },
+  ];
+
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-hidden">
       <Head>
         <title>Όνομα Σουβλατζίδικου | Αυθεντικά Ελληνικά Σουβλάκια</title>
         <meta name="description" content="Αυθεντικά ελληνικά σουβλάκια με παραδοσιακές γεύσεις" />
@@ -73,53 +153,32 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Το Μενού Μας</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Menu Item 1 */}
-            <div className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
-              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
-                <span className="text-gray-600">Εικόνα Σουβλάκι</span>
+          <div className="grid md:grid-cols-3 gap-6">
+            {menuItems.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg"
+              >
+                <div className="h-48 mb-4 relative">
+                  <Image
+                    src={item.imageSrc}
+                    alt={item.imageAlt}
+                    fill
+                    className="object-cover rounded"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+                <p className="text-gray-600 mb-4">{item.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-bold text-gray-900">{item.price}</span>
+                  <button className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors">
+                    Προσθήκη
+                  </button>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Σουβλάκι Χοιρινό</h3>
-              <p className="text-gray-600 mb-4">Χοιρινό με άρωμα θυμάρι και λεμόνι, σε παραδοσιακό πίτα</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-gray-900">€2.80</span>
-                <button className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors">
-                  Προσθήκη
-                </button>
-              </div>
-            </div>
-            
-            {/* Menu Item 2 */}
-            <div className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
-              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
-                <span className="text-gray-600">Εικόνα Γύρο</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Γύρος Κοτόπουλο</h3>
-              <p className="text-gray-600 mb-4">Γύρος κοτόπουλου με γιαούρτι και φρέσκια λαχανικά</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-gray-900">€3.20</span>
-                <button className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors">
-                  Προσθήκη
-                </button>
-              </div>
-            </div>
-            
-            {/* Menu Item 3 */}
-            <div className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
-              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
-                <span className="text-gray-600">Εικόνα Πίτα</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Πίτα Γύρος Μικτή</h3>
-              <p className="text-gray-600 mb-4">Μικτή πίτα με χοιρινό και κοτόπουλο, τζατζίκι και πατάτες</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-gray-900">€4.50</span>
-                <button className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors">
-                  Προσθήκη
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Link
               href="/menu"
@@ -138,6 +197,7 @@ export default function Home() {
         style={{
           backgroundImage: "url('/souvlakiBG2.jpg')",
           backgroundAttachment: "fixed", // παραμένει σταθερή όταν σκρολάρεις
+          display: 'none',
         }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-100 mb-12">Προσφορές</h2>
@@ -164,9 +224,11 @@ export default function Home() {
         </div>
       </section>
 
+      <RedSquareCarousel />
+
       {/* About Section */}
       <section id="about" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Η Ιστορία Μας</h2>
@@ -183,11 +245,21 @@ export default function Home() {
             </div>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-200 h-64 flex items-center justify-center">
-                <span className="text-gray-600">Φωτογραφία 1</span>
+              <div className="relative h-64 w-full">
+                <Image
+                  src="/photo1.jpg" // put your image in the public/images folder
+                  alt="Φωτογραφία 1"
+                  fill
+                  className="object-cover rounded"
+                />
               </div>
-              <div className="bg-gray-200 h-64 flex items-center justify-center">
-                <span className="text-gray-600">Φωτογραφία 2</span>
+              <div className="relative h-64 w-full">
+                <Image
+                  src="/photo2.jpg"
+                  alt="Φωτογραφία 2"
+                  fill
+                  className="object-cover rounded"
+                />
               </div>
             </div>
           </div>
@@ -195,36 +267,34 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 bg-gray-100">
+      <section 
+        id="contact" 
+        className="py-16 bg-gray-100"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Επικοινωνία</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 text-center border border-gray-200 transition-all duration-300 hover:shadow-lg">
-              <div className="h-16 w-16 mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white">📍</span>
+            {cards.map((card, i) => (
+              <div
+                key={i}
+                ref={(el) => { cardsRef.current[i] = el; }}
+                data-index={i}
+                className={`bg-white p-6 text-center border border-gray-200 transition-all duration-700 transform ${
+                  visible[i] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                } hover:shadow-lg`}
+              >
+                <div className="h-16 w-16 mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white">{card.icon}</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2">{card.title}</h3>
+                {card.description.split("\n").map((line, idx) => (
+                  <p key={idx} className="text-gray-600">
+                    {line}
+                  </p>
+                ))}
               </div>
-              <h3 className="text-xl font-bold mb-2">Τοποθεσία</h3>
-              <p className="text-gray-600">Οδός Παραδείσου 123, Αθήνα</p>
-            </div>
-            
-            <div className="bg-white p-6 text-center border border-gray-200 transition-all duration-300 hover:shadow-lg">
-              <div className="h-16 w-16 mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white">⏰</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Ωράριο</h3>
-              <p className="text-gray-600">Δευ-Παρ: 12:00 - 24:00</p>
-              <p className="text-gray-600">Σαβ-Κυρ: 12:00 - 02:00</p>
-            </div>
-            
-            <div className="bg-white p-6 text-center border border-gray-200 transition-all duration-300 hover:shadow-lg">
-              <div className="h-16 w-16 mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white">📞</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Τηλέφωνο</h3>
-              <p className="text-gray-600">210 123 4567</p>
-              <p className="text-gray-600">694 123 4567</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
