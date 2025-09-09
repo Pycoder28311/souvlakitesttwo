@@ -110,18 +110,6 @@ export default function Home() {
         <title>Όνομα Σουβλατζίδικου | Αυθεντικά Ελληνικά Σουβλάκια</title>
         <meta name="description" content="Αυθεντικά ελληνικά σουβλάκια με παραδοσιακές γεύσεις" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9KF5WEGPM"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-D9KF5WEGPM', { page_path: window.location.pathname });
-            `,
-          }}
-        />
       </Head>
 
       {/* Navigation */}

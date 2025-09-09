@@ -55,18 +55,6 @@ export default function Contact() {
         <title>Επικοινωνία - Souvlaki Palace</title>
         <meta name="description" content="Επικοινωνήστε με το Souvlaki Palace" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9KF5WEGPM"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-D9KF5WEGPM', { page_path: window.location.pathname });
-            `,
-          }}
-        />
       </Head>
 
       {/* Navigation */}

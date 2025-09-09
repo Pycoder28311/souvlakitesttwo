@@ -16,18 +16,6 @@ export default function About() {
         <title>Σχετικά | Σουβλατζίδικο</title>
         <meta name="description" content="Η ιστορία και η φιλοσοφία του σουβλατζίδικου μας" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9KF5WEGPM"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-D9KF5WEGPM', { page_path: window.location.pathname });
-            `,
-          }}
-        />
       </Head>
 
       {/* Navigation */}
