@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Head from 'next/head';
 import Navbar from '../navigator';
 import Footer from '../footer';
+import Link from "next/link";
 
 export default function Menu() {
   type Category = "souvlakia" | "piates" | "merides" | "salates" | "anapsyktika" | "pies" | "drinks";
@@ -19,21 +20,18 @@ export default function Menu() {
   ];
 
   const [activeCategory, setActiveCategory] = useState<Category>("souvlakia");
-
   const [isScrolled, setIsScrolled] = useState(false);
 
   const menuData = {
     souvlakia: [
-      { id: 1, name: 'Σουβλάκι Χοιρινό', description: 'Χοιρινό με άρωμα θυμάρι και λεμόνι', price: '€2.80' },
-      { id: 2, name: 'Σουβλάκι Κοτόπουλο', description: 'Φιλέτο κοτόπουλο με μπαχαρικά', price: '€2.70' },
-      { id: 3, name: 'Σουβλάκι Μοσχάρι', description: 'Μοσχάρι σε μαρινάδα σπέσιαλ', price: '€3.20' },
-      { id: 4, name: 'Σουβλάκι Κρεατικό', description: 'Μείγμα χοιρινού και μοσχαριού', price: '€3.00' },
+      { id: 1, name: 'Καλαμάκι Χοιρινό', description: '', price: '€2.80' },
+      { id: 2, name: 'Καλαμάκι Κοτόπουλο', description: '', price: '€2.70' },
+      { id: 3, name: 'Καλαμάκι Μοσχαρίσιο', description: '', price: '€3.20' },
     ],
     piates: [
-      { id: 1, name: 'Πίτα Γύρος Χοιρινό', description: 'Γύρος χοιρινό με πατάτες και σως', price: '€4.20' },
-      { id: 2, name: 'Πίτα Γύρος Κοτόπουλο', description: 'Γύρος κοτόπουλο με γιαούρτι', price: '€4.00' },
-      { id: 3, name: 'Πίτα Μικτή', description: 'Μείγμα χοιρινού και κοτόπουλου', price: '€4.50' },
-      { id: 4, name: 'Πίτα Κρεατικό', description: 'Κρεατικό με ντοματοσαλάτα', price: '€4.30' },
+      { id: 1, name: 'Πίτα Γύρο Χοιρινό', description: '', price: '€4.20' },
+      { id: 2, name: 'Πίτα Γύρο Κοτόπουλο', description: '', price: '€4.00' },
+      { id: 3, name: 'Πίτα Μικτή', description: '', price: '€4.50' },
     ],
     merides: [
       { id: 1, name: 'Πατάτες Τηγανιτές', description: 'Φρεσκοτηγανισμένες πατάτες', price: '€2.50' },
@@ -45,12 +43,17 @@ export default function Menu() {
       { id: 1, name: 'Χωριάτικη Σαλάτα', description: 'Ντομάτα, αγγούρι, κρεμμύδι, ελιές, φέτα', price: '€5.00' },
       { id: 2, name: 'Μαρουλοσαλάτα', description: 'Φρέσκο μαρούλι με λάδι και ξύδι', price: '€3.00' },
       { id: 3, name: 'Ντοματοσαλάτα', description: 'Φρέσκια ντομάτα με κρεμμύδι και φέτα', price: '€4.00' },
+      { id: 4, name: 'Μελιτζανοσαλάτα', description: 'Μελιτζάνες ψητές με σκόρδο και λάδι', price: '€3.50' },
+      { id: 5, name: 'Ταραμοσαλάτα', description: 'Ταραμάς με πατάτα', price: '€4.00' },
+      { id: 6, name: 'Σκορδαλιά', description: 'Πατάτα με σκόρδο και ελαιόλαδο', price: '€3.20' },
     ],
     anapsyktika: [
-      { id: 1, name: 'Τζατζίκι', description: 'Γιαούρτι με αγγούρι και σκόρδο', price: '€3.00' },
-      { id: 2, name: 'Μελιτζανοσαλάτα', description: 'Πεπόνι μελιτζάνας', price: '€3.50' },
-      { id: 3, name: 'Ταραμοσαλάτα', description: 'Ταραμάς με πατάτα', price: '€4.00' },
-      { id: 4, name: 'Σκορδαλιά', description: 'Πατάτα με σκόρδο και ελαιόλαδο', price: '€3.20' },
+      { id: 1, name: 'Pepsi', description: 'Αναψυκτικό 330ml', price: '€1.80' },
+      { id: 2, name: 'Coca-Cola', description: 'Αναψυκτικό 330ml', price: '€1.80' },
+      { id: 3, name: 'Fanta', description: 'Αναψυκτικό 330ml', price: '€1.80' },
+      { id: 4, name: 'Sprite', description: 'Αναψυκτικό 330ml', price: '€1.80' },
+      { id: 5, name: 'Νερό', description: 'Μπουκάλι 500ml', price: '€1.00' },
+      { id: 6, name: 'Χυμός Πορτοκάλι', description: 'Φυσικός χυμός πορτοκάλι', price: '€2.50' },
     ],
     pies: [
       { id: 1, name: 'Τυρόπιτα', description: 'Φύλλο με φέτα και αυγό', price: '€2.50' },
@@ -59,11 +62,10 @@ export default function Menu() {
       { id: 4, name: 'Μπουγάτσα', description: 'Γλυκιά μπουγάτσα με κρέμα', price: '€2.80' },
     ],
     drinks: [
-      { id: 1, name: 'Αναψυκτικό', description: 'Pepsi, Coca-Cola, Fanta, Sprite', price: '€1.80' },
-      { id: 2, name: 'Νερό', description: 'Μπουκάλι 500ml', price: '€1.00' },
-      { id: 3, name: 'Αλκοολούχα', description: 'Μπύρα, κρασί, ούζο', price: '€3.00-€5.00' },
-      { id: 4, name: 'Χυμός', description: 'Φυσικός χυμός πορτοκάλι', price: '€2.50' },
-    ]
+      { id: 1, name: 'Μπύρα', description: '', price: '€3.00-€5.00' },
+      { id: 2, name: 'Κρασί', description: '', price: '€4.50' },
+      { id: 3, name: 'Ούζο', description: '', price: '€3.50' },
+    ],
   };
 
   // Scroll detection
@@ -117,11 +119,20 @@ export default function Menu() {
       </section>
 
       {/* Menu Items */}
-      <section className="py-24 bg-white">
+      <section 
+        className="py-24 bg-white"
+        style={{
+          backgroundImage: "url('/covertrue.jpg')",
+          backgroundAttachment: "fixed",
+        }} 
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {menuData[activeCategory as keyof typeof menuData].map((item) => (
-              <div key={item.id} className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+              <div
+                key={item.id}
+                className="bg-white border border-gray-200 p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg w-full max-w-sm mx-auto"
+              >
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
@@ -129,9 +140,15 @@ export default function Menu() {
                   </div>
                   <span className="text-lg font-bold text-gray-900">{item.price}</span>
                 </div>
-                <button className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors w-full">
-                  Προσθήκη στην Παραγγελία
-                </button>
+                <div className="flex justify-center mt-4">
+                  <Link
+                    href="https://www.e-food.gr/"
+                    target="_blank" // ανοίγει σε νέα καρτέλα
+                    className="bg-gray-900 hover:bg-yellow-500 text-white hover:text-gray-900 px-4 py-2 font-bold transition-colors inline-block text-center"
+                  >
+                    Προσθήκη στο καλάθι
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

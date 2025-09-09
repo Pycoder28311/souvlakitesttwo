@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import "./navbar.css";
 
 export default function Navbar({scrolled = false}) {
   const [isScrolled, setIsScrolled] = useState(scrolled);
@@ -39,26 +40,15 @@ export default function Navbar({scrolled = false}) {
     window.removeEventListener("scroll", handleScroll);
     window.removeEventListener("resize", handleScroll);
   };
-}, [scrolled]);
-
+  }, [scrolled]);
 
   return (
-    <nav
-  className={`fixed w-full z-50 transition-all duration-300 ${
-    isScrolled
-      ? "bg-white shadow-md py-2 md:py-2" // desktop height stays the same
-      : "bg-transparent py-4 md:py-3"   // mobile taller when not scrolled
-  }`}
->
+    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : 'navbar-default'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span
-              className={`font-bold text-xl transition-colors ${
-                isScrolled ? "text-gray-900" : "text-white"
-              }`}
-            >
+            <span className={`navbar-logo ${isScrolled ? 'scrolled' : ''}`}>
               ΣΟΥΒΛΑΚΙΑ
             </span>
           </Link>
@@ -85,25 +75,25 @@ export default function Navbar({scrolled = false}) {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileOpen((v) => !v)}
-              className="relative w-8 h-8 flex items-center justify-center focus:outline-none"
+              className="relative w-8 h-8 flex items-center justify-center focus:outline-none z-30"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               {/* Top bar */}
               <span
-                className={`absolute left-1/2 top-1/2 w-6 h-0.5 bg-gray-900 transform transition duration-300 origin-center
-                  ${mobileOpen ? 'rotate-45 -translate-x-1/2 -translate-y-0' : '-translate-x-1/2 -translate-y-2'}`}
+                className={`absolute left-1/2 top-1/2 w-8 h-0.5 bg-gray-900 transform transition duration-300 origin-center
+                  ${mobileOpen ? 'rotate-45 -translate-x-1/2 -translate-y-0' : '-translate-x-1/2 -translate-y-2.5'}`}
               />
 
               {/* Middle bar */}
               <span
-                className={`absolute left-1/2 top-1/2 w-6 h-0.5 bg-gray-900 transform transition duration-300 origin-center
+                className={`absolute left-1/2 top-1/2 w-8 h-0.5 bg-gray-900 transform transition duration-300 origin-center
                   ${mobileOpen ? 'opacity-0 -translate-x-1/2' : '-translate-x-1/2 translate-y-0'}`}
               />
 
               {/* Bottom bar */}
               <span
-                className={`absolute left-1/2 top-1/2 w-6 h-0.5 bg-gray-900 transform transition duration-300 origin-center
-                  ${mobileOpen ? '-rotate-45 -translate-x-1/2 -translate-y-0' : '-translate-x-1/2 translate-y-2'}`}
+                className={`absolute left-1/2 top-1/2 w-8 h-0.5 bg-gray-900 transform transition duration-300 origin-center
+                  ${mobileOpen ? '-rotate-45 -translate-x-1/2 -translate-y-0' : '-translate-x-1/2 translate-y-2.5'}`}
               />
             </button>
           </div>
